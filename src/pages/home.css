@@ -1,0 +1,68 @@
+
+.home_header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 50px;
+    background: #041434;
+}
+
+.home_header h1 {
+    color: white;
+   font-size: 40px;
+    line-height: 0px;
+    margin-top: 60px;
+}
+
+.home_header h2 {
+    color: white;
+    font-size: 16px;
+    line-height: 0px;
+    font-weight: normal;
+    margin-top: 40px;
+}
+.search-box{
+    display: flex;
+    background: white;
+    padding: 10px;
+    border-radius: 10px;
+    margin-top: 30px;
+}
+.event-section{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 16px;
+    padding: 16px;
+    justify-items: center;
+}
+.event-card{
+    margin: 20px;
+}
+.booking-button{
+    margin-top: 20px;
+width: 100%;
+}
+.glowing-div {
+    padding: 20px;
+    background-color: #333;
+    color: white;
+    font-size: 24px;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);  /* Initial glow */
+    animation: shine 1.5s infinite alternate; /* Glowing animation */
+  }
+  
+  /* Shine Animation */
+  @keyframes shine {
+    0% {
+      box-shadow: 0 0 1px rgba(255, 255, 255, 0.5), 0 0 15px rgba(255, 255, 255, 0.4);
+    }
+    50% {
+      box-shadow: 0 0 1px rgba(255, 255, 255, 0.9), 0 0 5px rgba(255, 255, 255, 0.7);
+    }
+    100% {
+      box-shadow: 0 0 1px rgba(255, 255, 255, 0.5), 0 0 5px rgba(255, 255, 255, 0.4);
+    }
+  }
+  
