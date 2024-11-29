@@ -40,7 +40,8 @@ const Router = () => {
         <Route path={routes.HOME} element={<LazyPage page="Home" />} />
         <Route path={routes.EVENT} element={<LazyPage page="Event" />} />
 
-    
+        <Route path={routes.LOGIN} element={<LazyPage page="Login" />} />
+        <Route path={routes.SIGNUP} element={<LazyPage page="Signup" />} />
 
         {/* <Route path="*" element={<NotFound />} /> */}
       </Routes>
