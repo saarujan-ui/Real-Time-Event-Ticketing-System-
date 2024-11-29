@@ -3,7 +3,7 @@ import TopNav from "../components/layout/TopNav";
 import Footer from "../components/layout/footer";
 import tickets from "../Assets/tickets.png"; // Tell webpack this JS file uses this image
 import { Link, useNavigate } from "react-router-dom";
-
+import SearchInput from '../components/searchInput'
 import "./home.css"; // Optional: If you want to use external CSS
 
 // import { LoadMoreButton } from "../components/common";
@@ -107,13 +107,16 @@ const Home = () => {
         <div className="home_search">
           <h1>Let's book your ticket</h1>
           <h2>Discover your favorite entertainment right here</h2>
-          <div className="search-box">
+          {/* <div className="search-box">
             <Search
               placeholder="input search text"
               allowClear
               enterButton="Search"
               size="large"
             />
+          </div> */}
+          <div style={{marginTop:40}}>
+          <SearchInput/>
           </div>
         </div>
         <div className="glowing-div">
