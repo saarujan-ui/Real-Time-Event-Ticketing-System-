@@ -1,17 +1,69 @@
 import React, { useState } from 'react';
+import axios from 'axios';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { setUserID  } from '../Slices/userId';
+import {  setRole } from '../Slices/role';
 
 const LoginForm = () => {
   const [firstName, setFirstName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
+  const [role, setRole] = React.useState("");
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Add form submission logic here
-    console.log({ email, password, rememberMe });
+  const handleSubmit = async (e) => {
+   e.preventDefault(); // Prevent default form submission
+  console.log('ssssssssssssssssss')
+    // Create a data object with form inputs
+    const data = {
+      userId: null,
+      email: email,
+      password: password,
+      roles: [role]
+    };
+   // dispatch(setRole(role)); // Dispatch the action
+
+    console.log(data, "Payload being sent to the server");
+  
+    try {
+      // Make the POST request using Axios
+      const response = await axios.post("http://localhost:8088/auth/signup", JSON.stringify(data), {
+        headers: {
+          "Content-Type": "application/json"
+        }
+      });
+  
+      console.log("Response status:", response);
+  
+      // Check for success
+      if (response.status === 200 || response.status === 201) {
+
+        const userIdRegex = /userId: ([a-f0-9-]+)/;
+        const match = response.data.match(userIdRegex);
+        
+        const userId = match[1]; // Extract the userId from the match
+        console.log(userId,'userIduserId')
+        dispatch(setUserID(userId)); // Dispatch the action
+
+        navigate('/'); 
+     //   window.location.reload();
+
+        // console.log("Signup successful:", result);
+      //alert("Signup successful!");
+        // Perform further actions (e.g., redirect, clear form)
+      } else {
+        console.error("Signup failed:", response.data);
+        alert("Signup failed: " + (response.data.message || "Unknown error"));
+      }
+    } catch (err) {
+      console.error("Network error or server is unreachable:", err);
+      alert("An error occurred. Please check your network connection or try again later.");
+    }
   };
-
+  
   return (
     <div style={styles.container}>
       <div style={styles.logo}>
@@ -54,7 +106,20 @@ const LoginForm = () => {
             required
           />
         </div>
-        <div style={styles.options}>
+        <div style={styles.inputGroup}>
+    <label>Role</label>
+    <select
+      value={role}
+      onChange={(e) => setRole(e.target.value)}
+      style={styles.input}
+      required
+    >
+      <option value="" disabled>Select role</option>
+      <option value="ADMIN">Admin</option>
+      <option value="USER">User</option>
+    </select>
+  </div>
+        {/* <div style={styles.options}>
           <a href="#" style={styles.forgotPassword}>
             Forgot password
           </a>
@@ -66,7 +131,7 @@ const LoginForm = () => {
             />
             Remember me
           </label>
-        </div>
+        </div> */}
         <button type="submit" style={styles.button}>
           Sign in
         </button>

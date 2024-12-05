@@ -45,7 +45,7 @@ const EventHeader = () => {
 
   const handleHomeClick = (e) => {
     e.preventDefault();
-    navigate('/home'); 
+    navigate('/'); 
     window.location.reload();
   };
 

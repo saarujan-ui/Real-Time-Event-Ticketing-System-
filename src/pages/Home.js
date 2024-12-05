@@ -1,10 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import TopNav from "../components/layout/TopNav";
 import Footer from "../components/layout/footer";
 import tickets from "../Assets/tickets.png"; // Tell webpack this JS file uses this image
 import { Link, useNavigate } from "react-router-dom";
-import SearchInput from '../components/searchInput'
+import SearchInput from "../components/searchInput";
 import "./home.css"; // Optional: If you want to use external CSS
+import "./PopupForm.css"; // Import the CSS file
 
 // import { LoadMoreButton } from "../components/common";
 // import {
@@ -23,36 +24,61 @@ import "./home.css"; // Optional: If you want to use external CSS
 // import { getFilterProducts } from "../api/products";
 import { Input, Card, Button } from "antd";
 // import { Link, useNavigate } from 'react-router-dom';
+import { useSelector } from "react-redux";
+import PopupForm from '../components/form';
 
 const { Search } = Input;
 const { Meta } = Card;
 
 const Home = () => {
   const navigate = useNavigate();
+  const Role = useSelector((state) => state.role.role);
+  const [isOpen, setIsOpen] = useState(false);
+  const [formData, setFormData] = useState({});
 
+  const handleOpen = () => {
+    //setIsOpen(true);
+    navigate('eventupdate')
+  };
+
+  const handleClose = () => {
+    setIsOpen(false);
+  };
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Handle form submission and image upload logic here
+    console.log(formData);
+    handleClose();
+  };
+ 
   const dummyData = [
     {
       id: 1,
       title: "Rhythum Of Rock",
       date: "12.05.2024",
-      time:'06.00Pm',
-      location:'One Galle face',
+      time: "06.00Pm",
+      location: "One Galle face",
       imgSrc: "https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png",
     },
     {
       id: 2,
       title: "Mountain Adventures",
       date: "12.05.2024",
-      time:'06.00Pm',
-      location:'One Galle face',
+      time: "06.00Pm",
+      location: "One Galle face",
       imgSrc: "https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png",
     },
     {
       id: 3,
       title: "City Nights",
       date: "12.05.2024",
-      time:'06.00Pm',
-      location:'One Galle face',
+      time: "06.00Pm",
+      location: "One Galle face",
 
       imgSrc: "https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png",
     },
@@ -60,8 +86,8 @@ const Home = () => {
       id: 4,
       title: "Ocean Breeze",
       date: "12.05.2024",
-      time:'06.00Pm',
-      location:'One Galle face',
+      time: "06.00Pm",
+      location: "One Galle face",
 
       imgSrc: "https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png",
     },
@@ -69,8 +95,8 @@ const Home = () => {
       id: 2,
       title: "Mountain Adventures",
       date: "12.05.2024",
-      time:'06.00Pm',
-      location:'One Galle face',
+      time: "06.00Pm",
+      location: "One Galle face",
 
       imgSrc: "https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png",
     },
@@ -78,8 +104,8 @@ const Home = () => {
       id: 3,
       title: "City Nights",
       date: "12.05.2024",
-      time:'06.00Pm',
-      location:'One Galle face',
+      time: "06.00Pm",
+      location: "One Galle face",
 
       imgSrc: "https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png",
     },
@@ -87,8 +113,8 @@ const Home = () => {
       id: 4,
       title: "Ocean Breeze",
       date: "12.05.2024",
-      time:'06.00Pm',
-      location:'One Galle face',
+      time: "06.00Pm",
+      location: "One Galle face",
       imgSrc: "https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png",
     },
   ];
@@ -115,8 +141,8 @@ const Home = () => {
               size="large"
             />
           </div> */}
-          <div style={{marginTop:40}}>
-          <SearchInput/>
+          <div style={{ marginTop: 40 }}>
+            <SearchInput />
           </div>
         </div>
         <div className="glowing-div">
@@ -140,6 +166,23 @@ const Home = () => {
                 </Card>
             ))}
         </div> */}
+   
+      <div>
+        <Button
+          style={{
+            marginTop: "20px",
+            width: "20%",
+            marginLeft: "2%",
+            backgroundColor: "red",
+            //  color: "red",
+          }}
+           onClick={() => handleOpen()}
+          // className="upload-button"
+          //  type="primary"
+        >
+          Update your events
+        </Button>
+      </div>
       <div className="event-section">
         {dummyData.map((item) => (
           <div style={styles.card}>
@@ -190,6 +233,7 @@ const Home = () => {
       >
         <Footer />
       </div>
+  
     </>
   );
 };
@@ -233,6 +277,27 @@ const styles = {
     fontSize: "18px",
     color: "#007BFF",
   },
+  container: {
+    width: '100%',
+    maxWidth: '400px',
+    margin: '0 auto',
+    textAlign: 'center',
+    marginTop:'50px',
+    fontFamily: 'Arial, sans-serif',
+    padding: '20px',
+    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+    borderRadius: '10px',
+    border: '1px solid #ddd',
+    backgroundColor: '#fff',
+  },
+  logo: {
+    fontSize: '24px',
+    fontWeight: 'bold',
+    marginBottom: '20px',
+  },
+  blueText: { color: 'blue' },
+  blackText: { color: 'black' },
+ 
 };
 
 export default Home;
