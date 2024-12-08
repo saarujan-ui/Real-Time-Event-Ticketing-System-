@@ -17,7 +17,7 @@ const Footer = () => {
       >
         <img src={Logoss} alt="Logo" width={200} height={60} style={{paddingTop:20}}/>
         {/* <h1>My ticket</h1> */}
-        <p>MyTickets, Sri Lanka's premier and most trusted online ticket partner, serves as the official marketplace providing a secure and safe platform for purchasing tickets to all entertainment events in Sri Lanka.</p>
+        <p>SS Tickets, Sri Lanka's premier and most trusted online ticket partner, serves as the official marketplace providing a secure and safe platform for purchasing tickets to all entertainment events in Sri Lanka.</p>
       </div>
       <div
         style={{

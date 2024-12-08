@@ -3,10 +3,13 @@ import React from 'react';
 import {  Route, Routes,  } from 'react-router-dom'; // Import BrowserRouter
 // import { isAuthorized as useAuthorized } from 'selectors/auth';
 import Home from '../pages/Home'
-import * as routes from "../constants/routes";
+import Aboutus from '../pages/aboutus'
 
+import * as routes from "../constants/routes";
+// import Mytickets from '../pages/Mytickets';
 import { LazyPage } from '../components/LazyPage';
 import EventUpdate from '../pages/eventUpdate';
+import Event from '../pages/Event';
 
 
 const Router = () => {
@@ -39,11 +42,15 @@ const Router = () => {
           {/* <Route path={routes.LOGIN} element={<LazyPage page="Suppliers/Create" />} /> */}
         </Route>
         <Route path={routes.HOME} element={<Home />} />
-        <Route path={routes.EVENT} element={<LazyPage page="Event" />} />
+        <Route path={routes.EVENT} element={<Event/>} />
+        <Route path={routes.EVENTUPDATE} element={<EventUpdate/>} />
         <Route path={routes.EVENTUPDATE} element={<EventUpdate/>} />
 
         <Route path={routes.LOGIN} element={<LazyPage page="Login" />} />
         <Route path={routes.SIGNUP} element={<LazyPage page="Signup" />} />
+        <Route path={routes.ABOUTUS} element={<Aboutus/>} />
+
+        {/* <Route path={routes.MYTICKETS} element={<Mytickets/>} /> */}
 
         {/* <Route path="*" element={<NotFound />} /> */}
       </Routes>

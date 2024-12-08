@@ -14,7 +14,12 @@ console.log(auserId,'auserIdauserIdauserIdauserIdauserIdauserId')
   const handleEventClick = (item) => {
     navigate("/signup", { state: item });
     // e.preventDefault();
-    window.location.reload();
+  // window.location.reload(); 
+  };
+  const handlesignin = (item) => {
+    navigate("/login", { state: item });
+    // e.preventDefault();
+  //  window.location.reload();
   };
   const handleEventlogout = (item) => {
     dispatch(setUserID(null)); // Dispatch the action
@@ -31,10 +36,9 @@ console.log(auserId,'auserIdauserIdauserIdauserIdauserIdauserId')
         <h1 style={{color:'#4A4D4D'}}>TICKETS</h1>
         <nav style={{marginLeft:'40px'}}>
         <ul className="nav-list">
-          <li><a href="/">Home</a></li>
-          <li><a href="/about">About</a></li>
-      {/* //    <li><a href="/services">Services</a></li> */}
-          <li><a href="/contact">My Tickets</a></li>
+        <li><Link to="/">Home</Link></li>
+            <li><Link to="/aboutus">About</Link></li>
+            {/* <li><Link to="/mytickets">My Tickets</Link></li> */}
         </ul>
       </nav>
       </div>
@@ -47,7 +51,7 @@ console.log(auserId,'auserIdauserIdauserIdauserIdauserIdauserId')
       ) : (
         <div style={styles.container}>
           <button onClick={() => handleEventClick()} style={styles.button}>Register</button>
-          <button style={styles.button}>Sign In</button>
+          <button onClick={() => handlesignin()} style={styles.button}>Sign In</button>
         </div>
       )}
     </header>

@@ -37,6 +37,7 @@ const EventUpdate = () => {
     // Process the finalTickets array as needed
     console.log(finalTickets,'finalTicketsfinalTickets'); // Log the array to the console
     const data = {
+      adminId:'',
         eventId: userId,
         eventName: eventName,
         date: date,
@@ -47,7 +48,7 @@ const EventUpdate = () => {
         moreInfo:'',
         ticketPolicy:'',
         imagePath:image,
-        image:image
+       
       };
       console.log(data,'eventdetails')
     try {
@@ -68,10 +69,10 @@ const EventUpdate = () => {
           
         //   const userId = match[1]; // Extract the userId from the match
         //   console.log(userId,'userIduserId')
-      //    dispatch(setUserID(userId)); // Dispatch the action
+        //  dispatch(setUserID(userId)); // Dispatch the action
   
-     //     navigate('/'); 
-       //   window.location.reload();
+         navigate('/'); 
+      //   window.location.reload();
   
            console.log("update successful:", response);
         //alert("Signup successful!");
@@ -167,8 +168,8 @@ const EventUpdate = () => {
           <div style={styles.inputGroup}>
             <label>Event Image</label>
             <input
-              type="file"
-              placeholder="Update your event image"
+              type="url"
+              placeholder="Place your event image url"
                  value={image}
                  onChange={(e) => setImage(e.target.value)}
               style={styles.input}

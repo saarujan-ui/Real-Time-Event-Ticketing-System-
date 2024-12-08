@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState ,useEffect} from "react";
 import TopNav from "../components/layout/TopNav";
 import Footer from "../components/layout/footer";
 import tickets from "../Assets/tickets.png"; // Tell webpack this JS file uses this image
@@ -26,6 +26,7 @@ import { Input, Card, Button } from "antd";
 // import { Link, useNavigate } from 'react-router-dom';
 import { useSelector } from "react-redux";
 import PopupForm from '../components/form';
+import axios from 'axios';
 
 const { Search } = Input;
 const { Meta } = Card;
@@ -35,6 +36,7 @@ const Home = () => {
   const Role = useSelector((state) => state.role.role);
   const [isOpen, setIsOpen] = useState(false);
   const [formData, setFormData] = useState({});
+  const [data, setData] = useState([]);
 
   const handleOpen = () => {
     //setIsOpen(true);
@@ -55,74 +57,34 @@ const Home = () => {
     console.log(formData);
     handleClose();
   };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Make a GET request to the API
+        const response = await axios.get('http://localhost:8088/events/all'); // Example API endpoint
+       // console.log(first)
+        setData(response.data);  // Store response data in state
+       // setLoading(false);  // Set loading to false after data is fetched
+      } catch (err) {
+       // setError(err.message);  // Capture any error that occurs
+      //  setLoading(false);
+      }
+    };
+
+    fetchData();  
+  }, []);  
+
  
-  const dummyData = [
-    {
-      id: 1,
-      title: "Rhythum Of Rock",
-      date: "12.05.2024",
-      time: "06.00Pm",
-      location: "One Galle face",
-      imgSrc: "https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png",
-    },
-    {
-      id: 2,
-      title: "Mountain Adventures",
-      date: "12.05.2024",
-      time: "06.00Pm",
-      location: "One Galle face",
-      imgSrc: "https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png",
-    },
-    {
-      id: 3,
-      title: "City Nights",
-      date: "12.05.2024",
-      time: "06.00Pm",
-      location: "One Galle face",
-
-      imgSrc: "https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png",
-    },
-    {
-      id: 4,
-      title: "Ocean Breeze",
-      date: "12.05.2024",
-      time: "06.00Pm",
-      location: "One Galle face",
-
-      imgSrc: "https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png",
-    },
-    {
-      id: 2,
-      title: "Mountain Adventures",
-      date: "12.05.2024",
-      time: "06.00Pm",
-      location: "One Galle face",
-
-      imgSrc: "https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png",
-    },
-    {
-      id: 3,
-      title: "City Nights",
-      date: "12.05.2024",
-      time: "06.00Pm",
-      location: "One Galle face",
-
-      imgSrc: "https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png",
-    },
-    {
-      id: 4,
-      title: "Ocean Breeze",
-      date: "12.05.2024",
-      time: "06.00Pm",
-      location: "One Galle face",
-      imgSrc: "https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png",
-    },
-  ];
 
   const handleEventClick = (item) => {
     navigate("/event", { state: item });
     // e.preventDefault();
-    window.location.reload();
+  //  window.location.reload();
+  };
+  const handleSearch = () => {
+  //  navigate("/event", { state: item });
+    // e.preventDefault();
+  //  window.location.reload();
   };
 
   return (
@@ -133,41 +95,17 @@ const Home = () => {
         <div className="home_search">
           <h1>Let's book your ticket</h1>
           <h2>Discover your favorite entertainment right here</h2>
-          {/* <div className="search-box">
-            <Search
-              placeholder="input search text"
-              allowClear
-              enterButton="Search"
-              size="large"
-            />
-          </div> */}
           <div style={{ marginTop: 40 }}>
-            <SearchInput />
+            <SearchInput handleSearch={handleSearch}/>
           </div>
         </div>
         <div className="glowing-div">
           <img src={tickets} alt="Logo" width={500} height={200} />
         </div>
       </div>
-
-      {/*Event section*/}
-      {/* <div className="event-section">
-            {dummyData.map((item) => (
-                <Card
-                    className='event-card'
-                    key={item.id}
-                    hoverable
-                    cover={<img alt={item.title} src={item.imgSrc} />}
-                >
-                    <Meta title={item.title} 
-                    description={item.description}
-                     />
-                    <Button  onClick={() => handleEventClick(item)} className='booking-button' type="primary">Book Now</Button>
-                </Card>
-            ))}
-        </div> */}
    
       <div>
+      {Role === 'ADMIN' &&
         <Button
           style={{
             marginTop: "20px",
@@ -177,25 +115,27 @@ const Home = () => {
             //  color: "red",
           }}
            onClick={() => handleOpen()}
-          // className="upload-button"
-          //  type="primary"
+         
         >
           Update your events
         </Button>
+}
       </div>
+      <h2 style={{paddingLeft:30}}>All Events</h2>
+
       <div className="event-section">
-        {dummyData.map((item) => (
+        {data.map((item) => (
           <div style={styles.card}>
             {/* Image Section */}
             <img
-              src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png"
+              src={item?.imageUrl}
               alt="Event"
               style={styles.image}
             />
 
             {/* Details Section */}
             <div style={styles.details}>
-              <h2 style={styles.title}>{item.title}</h2>
+              <h2 style={styles.title}>{item.name}</h2>
 
               {/* Date and Time */}
               <div style={styles.infoRow}>
@@ -210,19 +150,32 @@ const Home = () => {
               {/* Location */}
               <div style={styles.infoRow}>
                 <span style={styles.icon}>📍</span>
-                <span>{item.location}</span>
+                <span>{item.venue}</span>
               </div>
+              {Role !== 'ADMIN' &&
               <Button
                 onClick={() => handleEventClick(item)}
                 className="booking-button"
                 type="primary"
               >
                 Book Now
-              </Button>
+              </Button>}
             </div>
           </div>
         ))}
       </div>
+      {Role !== 'ADMIN' &&
+
+      <div 
+       style={{
+        alignItems: "flex-end",
+        justifyContent: "flex-end",
+        position: "relative",
+        padding: 20
+       }}>
+       
+      </div>
+}
       <div
         style={{
           alignItems: "flex-end",

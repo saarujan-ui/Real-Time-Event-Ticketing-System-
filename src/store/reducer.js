@@ -1,13 +1,15 @@
 import { combineReducers } from '@reduxjs/toolkit';
 import { PURGE } from 'redux-persist';
-import cityReducer from '../features/banner/bannerSlice';
 import userSlice from '../Slices/userId'
 import role from '../Slices/role'
+import ticketPrice from '../Slices/ticketprices'
+import bookedtickets from '../Slices/bookedtickets'
 
 const appReducer = combineReducers({
-  city: cityReducer,
   userId:userSlice,
-  role:role
+  role:role,
+  ticketPrice:ticketPrice,
+  bookedtickets:bookedtickets
 });
 
 const rootReducer = (state, action) => {

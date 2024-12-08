@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setUserID  } from '../Slices/userId';
-import {  setRole } from '../Slices/role';
+import {  setRole, setroles } from '../Slices/role';
 
 const LoginForm = () => {
   const [firstName, setFirstName] = useState('');
@@ -47,7 +47,7 @@ const LoginForm = () => {
         const userId = match[1]; // Extract the userId from the match
         console.log(userId,'userIduserId')
         dispatch(setUserID(userId)); // Dispatch the action
-
+        dispatch(setroles(role));
         navigate('/'); 
      //   window.location.reload();
 

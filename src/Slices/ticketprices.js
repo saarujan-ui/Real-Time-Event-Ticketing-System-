@@ -2,18 +2,18 @@ import { createSlice } from '@reduxjs/toolkit';
 
 
 const initialState = {
-    role: null,
+    ticketPrice: null,
   };
 
 const userSlice = createSlice({
-  name: 'role',
+  name: 'ticketPrice',
   initialState,
   reducers: {
-    setroles: (state, action) => {
-      state.role = action.payload;
+    setTicketPrice: (state, action) => {
+      state.ticketPrice = action.payload;
     },
   },
 });
 
-export const { setroles } = userSlice.actions;
+export const { setTicketPrice } = userSlice.actions;
 export default userSlice.reducer;

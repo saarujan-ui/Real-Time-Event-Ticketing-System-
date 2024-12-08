@@ -1,14 +1,57 @@
 import React, { useState } from 'react';
-
-const SignupForm = () => {
+import axios from 'axios';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { setUserID  } from '../Slices/userId';
+import {  setRole, setroles } from '../Slices/role';
+const LoginForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
-
-  const handleSubmit = (e) => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const handleSubmit = async (e) => {
     e.preventDefault();
     // Add form submission logic here
     console.log({ email, password, rememberMe });
+    const data = {
+      email: email,
+      password: password,
+    };
+    try {
+      // Make the POST request using Axios
+      const response = await axios.post("http://localhost:8088/auth/login", JSON.stringify(data), {
+        headers: {
+          "Content-Type": "application/json"
+        }
+      });
+  
+      console.log("Responsestatus:", response);
+  
+      // Check for success
+      if (response.data ) {
+
+        // const userIdRegex = /userId: ([a-f0-9-]+)/;
+        // const match = response.data.match(userIdRegex);
+        
+        const userId = response?.data.slice(':'); // Extract the userId from the match
+        console.log(userId,'userIduserId')
+        dispatch(setUserID(userId)); // Dispatch the action
+        // dispatch(setroles(role));
+        navigate('/'); 
+     //   window.location.reload();
+
+        // console.log("Signup successful:", result);
+      //alert("Signup successful!");
+        // Perform further actions (e.g., redirect, clear form)
+      } else {
+        console.error("signin failed:", response.data);
+        alert("Signup failed: " + (response.data.message || "Unknown error"));
+      }
+    } catch (err) {
+      console.error("Network error or server is unreachable:", err);
+     alert("An error occurred. Please check your network connection or try again later.");
+    }
   };
 
   return (
@@ -43,9 +86,9 @@ const SignupForm = () => {
           />
         </div>
         <div style={styles.options}>
-          <a href="#" style={styles.forgotPassword}>
+          {/* <a href="#" style={styles.forgotPassword}>
             Forgot password
-          </a>
+          </a> */}
           <label style={styles.rememberMe}>
             <input
               type="checkbox"
@@ -128,4 +171,4 @@ const styles = {
   },
 };
 
-export default SignupForm;
+export default LoginForm;

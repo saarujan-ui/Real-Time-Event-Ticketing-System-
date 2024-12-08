@@ -46,14 +46,14 @@ const EventHeader = () => {
   const handleHomeClick = (e) => {
     e.preventDefault();
     navigate('/'); 
-    window.location.reload();
+  //  window.location.reload();
   };
 
   
   const handleEventClick = (e) => {
     e.preventDefault(); 
     navigate('/event'); 
-    window.location.reload(); 
+  // window.location.reload(); 
   };
 
 
@@ -79,7 +79,7 @@ const EventHeader = () => {
 
    
         <span className="search-header-current">
-          Diyaluma Waterfall Abseiling
+          Event
         </span>
       </nav>
     </div>
